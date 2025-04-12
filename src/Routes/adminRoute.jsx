@@ -9,7 +9,7 @@ function AdminRoute() {
   return (
     <Routes>
       {/* Public admin route for login */}
-      <Route path="/login" element={<AdminLogin />} />
+      <Route path="/" element={<AdminLogin />} />
 
       {/* Protected admin routes wrapped in AdminLayout */}
       <Route
