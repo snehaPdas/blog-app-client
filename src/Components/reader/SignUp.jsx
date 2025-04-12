@@ -33,7 +33,7 @@ const Signup = () => {
     try {
       const response = await axiosInstance.post("/signup", {form, role: "reader"});
       console.log("Signup response:", response.data);
-      navigate('/login')
+      navigate('/')
       // Redirect or show a success message
     } catch (err) {
       console.error("Signup error:", err.response || err.message);
