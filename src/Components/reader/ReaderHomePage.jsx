@@ -32,7 +32,7 @@ const ReaderHomePage = () => {
   function handleLogout() {
     localStorage.removeItem("user_access_token");
     localStorage.removeItem("user_id");
-    navigate("/login");
+    navigate("/");
   }
 
   const filteredPosts =
