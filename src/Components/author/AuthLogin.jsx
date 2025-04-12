@@ -29,7 +29,7 @@ const Login = () => {
         role: "author"
       });
 
-      localStorage.setItem("user_access_token", response.data.token);
+      localStorage.setItem("author_access_token", JSON.stringify(response.data.token));
 
       console.log("Login successful:", response.data);
       navigate("/author/dashboard");

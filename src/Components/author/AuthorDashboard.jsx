@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { authorInstance } from "../../config/axiosConfig";
 
 const AuthorDashboard = () => {
   const [posts, setPosts] = useState([]);
@@ -19,15 +19,15 @@ const AuthorDashboard = () => {
   useEffect(() => {
     // Fetch posts and categories on load
 
-    const token = localStorage.getItem("user_access_token");
+    const token = localStorage.getItem("author_access_token");
     if (!token) {
-      navigate("/login");
+      navigate("/author/login");
      }
 
     const fetchData = async () => {
       try {
-        const postResponse = await axios.get("http://localhost:4000/author/posts");
-        const categoryResponse = await axios.get("http://localhost:4000/author/categories");
+        const postResponse = await authorInstance.get("/author/posts");
+        const categoryResponse = await authorInstance.get("/author/categories");
         setPosts(postResponse.data.posts);
         setCategories(categoryResponse.data.categories);
       } catch (err) {
@@ -45,7 +45,7 @@ const AuthorDashboard = () => {
         content: newPostContent,
         category: newPostCategory,
       };
-      await axios.post("http://localhost:4000/author/posts", newPost);
+      await authorInstance.post("/author/posts", newPost);
       setPosts([...posts, newPost]);
       setNewPostTitle("");
       setNewPostContent("");
@@ -58,7 +58,7 @@ const AuthorDashboard = () => {
   // Delete a post
   const handleDeletePost = async (postId) => {
     try {
-      await axios.delete(`http://localhost:4000/author/posts/${postId}`);
+      await authorInstance.delete(`/author/posts/${postId}`);
       setPosts(posts.filter(post => post._id !== postId));
     } catch (err) {
       setError("Error deleting post", err);
@@ -81,7 +81,7 @@ const AuthorDashboard = () => {
         content: editPostContent,
         category: editPostCategory,
       };
-      await axios.put(`http://localhost:4000/author/posts/${editingPostId}`, updatedPost);
+      await authorInstance.put(`/author/posts/${editingPostId}`, updatedPost);
       
       setPosts(posts.map((post) => 
         post._id === editingPostId ? { ...post, ...updatedPost } : post
@@ -101,8 +101,8 @@ const AuthorDashboard = () => {
   const handleCreateCategory = async () => {
     try {
       const newCategory = { name: newCategoryName };
-      await axios.post("http://localhost:4000/author/categories", newCategory);
-      const categoryResponse = await axios.get("http://localhost:4000/author/categories");
+      await authorInstance.post("/author/categories", newCategory);
+      const categoryResponse = await authorInstance.get("/author/categories");
       setCategories(categoryResponse.data.categories);
       setNewCategoryName("");
     } catch (err) {
