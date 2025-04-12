@@ -14,7 +14,7 @@ const Sidebar = () => {
     localStorage.removeItem('admin_access_token');
     localStorage.removeItem('user_id');
     // Navigate to login page
-    navigate('/admin/login');
+    navigate('/admin');
     // Close sidebar on mobile
     setIsOpen(false);
   };
