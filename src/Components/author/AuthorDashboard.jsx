@@ -57,6 +57,7 @@ const AuthorDashboard = () => {
 
   // Delete a post
   const handleDeletePost = async (postId) => {
+    console.log("Deleting post with ID:", postId);
     try {
       await authorInstance.delete(`/author/posts/${postId}`);
       setPosts(posts.filter(post => post._id !== postId));
